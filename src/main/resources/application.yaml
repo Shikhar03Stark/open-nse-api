@@ -1,0 +1,6 @@
+server:
+    port: 5480
+
+httpclient:
+    timeout:
+        second: 10
