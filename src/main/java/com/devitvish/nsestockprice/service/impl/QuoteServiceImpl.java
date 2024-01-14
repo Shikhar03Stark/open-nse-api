@@ -3,6 +3,8 @@ package com.devitvish.nsestockprice.service.impl;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpResponse;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -13,7 +15,9 @@ import com.devitvish.nsestockprice.exception.NseStockDoesNotExistException;
 import com.devitvish.nsestockprice.exception.OperationType;
 import com.devitvish.nsestockprice.exception.error.NseAPIBlankResponseError;
 import com.devitvish.nsestockprice.exception.error.NseInternalServerError;
+import com.devitvish.nsestockprice.exception.error.NseInvalidHistoricalDataError;
 import com.devitvish.nsestockprice.network.FetchManager;
+import com.devitvish.nsestockprice.resource.HistoricalPrice;
 import com.devitvish.nsestockprice.resource.Stock;
 import com.devitvish.nsestockprice.service.QuoteService;
 
