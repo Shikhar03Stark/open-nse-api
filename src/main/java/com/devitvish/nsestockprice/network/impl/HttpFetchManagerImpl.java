@@ -40,7 +40,7 @@ public class HttpFetchManagerImpl implements FetchManager {
         try {
             executeRequest(request);
         } catch (IOException | InterruptedException e) {
-            log.error("Error encountered while reseting cookies", e.getMessage());
+            log.error("Error encountered while reseting cookies {}", e.getMessage());
         }
     }
 
