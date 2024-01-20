@@ -1,22 +1,17 @@
-name: Deploy Java SprintBoot Application (open-nse-price)
+name: Deploy open-nse-price
 
 on:
     push: 
         branches: ["main"]
 
+env:
+  expose_port: 5480
+
 jobs:
-    build:
+    build-deploy:
         runs-on: ubuntu-22.04
 
         steps:
-            - name: Set up Maven - Test
-              uses: s4u/setup-maven-action@v1.11.0
-              with:
-                maven-version: 3.8.2
-                java-version: 17
-
-            - run: mvn -V clean install
-
             - name: Login to DockerHub
               uses: docker/login-action@v3
               with:
@@ -33,6 +28,16 @@ jobs:
                 file: ./Dockerfile
                 push: true
                 tags: ${{ secrets.DOCKER_USERNAME }}/open-nse-price:${{ github.sha }}
+
+            - name: Deploying latest image to server
+              uses: appleboy/ssh-action@v1.0.3
+              with:
+                host: ${{ secrets.SERVER_IPV4 }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_CREDENTIALS }}
+                script: cd docker && ./run_container.sh ${{ secrets.DOCKER_USERNAME }}/open-nse-price ${{ github.sha }} ${{ env.expose_port }}
+
+            
 
 
 
