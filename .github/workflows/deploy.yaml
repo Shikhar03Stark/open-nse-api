@@ -3,8 +3,6 @@ name: Deploy Java SprintBoot Application (open-nse-price)
 on:
     push: 
         branches: ["main"]
-    pull_request: 
-        branches: ["main"]
 
 jobs:
     build:
