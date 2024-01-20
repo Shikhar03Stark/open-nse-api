@@ -20,8 +20,25 @@ jobs:
                 maven-version: 3.8.2
                 java-version: 17
 
-            - run: mvn -V clean install
+            - run: mvn -V clean install -DskipTests
 
+    test:
+      runs-on: ubuntu-22.04
+
+      steps:
+          - name: Set up Maven - Test
+            uses: s4u/setup-maven-action@v1.11.0
+            with:
+              maven-version: 3.8.2
+              java-version: 17
+
+          - run: mvn -V clean install test
+
+    push-to-registry:
+        runs-on: ubuntu-22.04
+
+
+        steps:
             - name: Login to DockerHub
               uses: docker/login-action@v3
               with:
@@ -39,13 +56,16 @@ jobs:
                 push: true
                 tags: ${{ secrets.DOCKER_USERNAME }}/open-nse-price:${{ github.sha }}
 
+    deploy:
+      runs-on: ubuntu-22.04
+      steps:                
             - name: Deploying latest image to server
               uses: appleboy/ssh-action@v1.0.3
               with:
                 host: ${{ secrets.SERVER_IPV4 }}
                 username: ${{ secrets.SSH_USER }}
                 key: ${{ secrets.SSH_CREDENTIALS }}
-                script: cd docker && ./run_container ${{ secrets.DOCKER_USERNAME }}/open-nse-price ${{ github.sha }} ${{ env.expose_port }}
+                script: cd docker && ./run_container.sh ${{ secrets.DOCKER_USERNAME }}/open-nse-price ${{ github.sha }} ${{ env.expose_port }}
 
             
 
