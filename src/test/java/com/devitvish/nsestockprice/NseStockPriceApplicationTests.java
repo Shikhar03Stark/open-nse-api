@@ -1,4 +1,4 @@
-package com.devitharshit.nsestockprice;
+package com.devitvish.nsestockprice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
