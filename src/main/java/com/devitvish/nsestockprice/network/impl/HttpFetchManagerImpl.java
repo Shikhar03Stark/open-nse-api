@@ -27,37 +27,10 @@ public class HttpFetchManagerImpl implements FetchManager {
 
     private static final String RESET_COOKIE_URL = "https://www.nseindia.com";
 
-    private static final String HEADER_USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0";
-    private static final String HEADER_AUTHORITY = "www.nseindia.com";
-    private static final String HEADER_ACCEPT = "*/*";
-    private static final String HEADER_ACCEPT_LANG = "en-US,en;q=0.9";
-    private static final String HEADER_DNT = "1";
-    private static final String HEADER_UPGRADE_INSECURE_REQUESTS = "1";
-    private static final String HEADER_SEC_UA = "\"Not_A Brand\";v=\"8\", \"Chromium\";v=\"120\", \"Microsoft Edge\";v=\"120\"";
-    private static final String HEADER_SEC_UA_MOBILE = "?0";
-    private static final String HEADER_SEC_PLATFORM = "macOS";
-    private static final String HEADER_SEC_FETCH_DEST = "document";
-    private static final String HEADER_SEC_FETCH_MODE = "navigate";
-    private static final String HEADER_SEC_FETCH_SITE = "none";
-    private static final String HEADER_SEC_FETCH_USER = "?1";
-
     private void resetCookie() {
         final HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(URI.create(RESET_COOKIE_URL))
-                .setHeader("user-agent", HEADER_USER_AGENT)
-                .setHeader("authority", HEADER_AUTHORITY)
-                .setHeader("accept", HEADER_ACCEPT)
-                .setHeader("accept-language", HEADER_ACCEPT_LANG)
-                .setHeader("dnt", HEADER_DNT)
-                .setHeader("upgrade-insecure-requests", HEADER_UPGRADE_INSECURE_REQUESTS)
-                .setHeader("sec-ch-ua", HEADER_SEC_UA)
-                .setHeader("sec-ch-ua-mobile", HEADER_SEC_UA_MOBILE)
-                .setHeader("sec-ch-ua-platform", HEADER_SEC_PLATFORM)
-                .setHeader("sec-fetch-dest", HEADER_SEC_FETCH_DEST)
-                .setHeader("sec-fetch-site", HEADER_SEC_FETCH_SITE)
-                .setHeader("sec-fetch-mode", HEADER_SEC_FETCH_MODE)
-                .setHeader("sec-fetch-user", HEADER_SEC_FETCH_USER)
                 .GET()
                 .build();
         log.info("resetting the cookies, calling GET to {}", RESET_COOKIE_URL);
@@ -73,19 +46,6 @@ public class HttpFetchManagerImpl implements FetchManager {
         return HttpRequest
                 .newBuilder()
                 .uri(endpoint)
-                .setHeader("user-agent", HEADER_USER_AGENT)
-                .setHeader("authority", HEADER_AUTHORITY)
-                .setHeader("accept", HEADER_ACCEPT)
-                .setHeader("accept-language", HEADER_ACCEPT_LANG)
-                .setHeader("dnt", HEADER_DNT)
-                .setHeader("upgrade-insecure-requests", HEADER_UPGRADE_INSECURE_REQUESTS)
-                .setHeader("sec-ch-ua", HEADER_SEC_UA)
-                .setHeader("sec-ch-ua-mobile", HEADER_SEC_UA_MOBILE)
-                .setHeader("sec-ch-ua-platform", HEADER_SEC_PLATFORM)
-                .setHeader("sec-fetch-dest", HEADER_SEC_FETCH_DEST)
-                .setHeader("sec-fetch-site", HEADER_SEC_FETCH_SITE)
-                .setHeader("sec-fetch-mode", HEADER_SEC_FETCH_MODE)
-                .setHeader("sec-fetch-user", HEADER_SEC_FETCH_USER)
                 .GET()
                 .build();
     }
