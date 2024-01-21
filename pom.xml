@@ -17,6 +17,7 @@
 		<java.version>17</java.version>
 		<log4j.version>3.0.0-alpha1</log4j.version>
 		<jackson-datetype.version>2.16.1</jackson-datetype.version>
+		<methonol.version>1.7.0</methonol.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -43,6 +44,12 @@
 			<groupId>com.fasterxml.jackson.datatype</groupId>
 			<artifactId>jackson-datatype-jsr310</artifactId>
 			
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.mizosoft.methanol</groupId>
+			<artifactId>methanol</artifactId>
+			<version>${methonol.version}</version>
 		</dependency>
 	</dependencies>
 
