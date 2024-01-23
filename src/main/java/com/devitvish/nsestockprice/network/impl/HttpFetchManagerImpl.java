@@ -6,6 +6,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.net.http.HttpResponse.BodyHandlers;
+import java.time.Duration;
 import java.util.Optional;
 
 import org.springframework.stereotype.Component;
@@ -31,6 +32,7 @@ public class HttpFetchManagerImpl implements FetchManager {
         final HttpRequest request = HttpRequest
                 .newBuilder()
                 .uri(URI.create(RESET_COOKIE_URL))
+                .timeout(httpClient.connectTimeout().orElse(Duration.ofSeconds(10)))
                 .GET()
                 .build();
         log.info("resetting the cookies, calling GET to {}", RESET_COOKIE_URL);
@@ -46,6 +48,7 @@ public class HttpFetchManagerImpl implements FetchManager {
         return HttpRequest
                 .newBuilder()
                 .uri(endpoint)
+                .timeout(httpClient.connectTimeout().orElse(Duration.ofSeconds(10)))
                 .GET()
                 .build();
     }
