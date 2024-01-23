@@ -1,11 +1,12 @@
 package com.devitvish.nsestockprice.service;
 
-import java.time.LocalDate;
+import org.springframework.cache.annotation.Cacheable;
 
 import com.devitvish.nsestockprice.exception.NseStockDoesNotExistException;
-import com.devitvish.nsestockprice.resource.HistoricalPrice;
 import com.devitvish.nsestockprice.resource.Stock;
 
 public interface QuoteService {
+    
+    @Cacheable(cacheNames = {"StockQuoteCache"}, unless = "#result == null")
     Stock getQuote(String stockSymbol) throws NseStockDoesNotExistException;
 }

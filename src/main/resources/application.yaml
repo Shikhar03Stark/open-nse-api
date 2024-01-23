@@ -4,3 +4,9 @@ server:
 httpclient:
     timeout:
         second: 10
+
+spring:
+  cache:
+    cache-names:
+    - "StockQuoteCache"
+    
