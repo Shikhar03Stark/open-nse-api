@@ -9,4 +9,14 @@ spring:
   cache:
     cache-names:
     - "StockQuoteCache"
-    
+
+jwt:
+    secret: ${JWT_SECRET:R5bTIB3ifmnrp7MTejcWyTpJ3xe0bdTClZ23u1DlpdClbQYcV2NFl7GnwUgpWHY4WmZOt7fK6qjcSGo8RFHOe8kncPwsyVSz3dH4eAco5vBKBR3UJgliOObHQDmrtiUXdbzsK8aurULjAQKgsxDeHmmVLOgQufW1Rw6A00zqn71qfBIJHATYhwE9ZGkHDJAScRxwbMMYssd9kqyYStFjTuKjoAYz7QSahymyOLXWa8AtD7lZ0eCrvyHMLAK2nLkO}
+    expire:
+        second: 86400
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
