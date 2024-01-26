@@ -1,9 +1,9 @@
 package com.devitvish.nsestockprice.auth.filter;
 
 import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
+import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -14,7 +14,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.devitvish.nsestockprice.auth.ApiKeyAuthentication;
-import com.devitvish.nsestockprice.exception.error.NseServerUnauthorizedError;
 import com.devitvish.nsestockprice.service.JWTService;
 
 import jakarta.servlet.FilterChain;
@@ -22,8 +21,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Component
+@Slf4j
+@Configuration
 @RequiredArgsConstructor
 public class APITokenFilter extends OncePerRequestFilter {
 
@@ -32,8 +33,12 @@ public class APITokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) throws ServletException, IOException {
         final Optional<String> optionalToken = extractTokenFromRequest(request);
-        final String token = optionalToken.orElseThrow(() -> new BadCredentialsException("API key not found"));
-        
+        if(optionalToken.isEmpty()){
+            log.info("Request does not have API token");
+            filterChain.doFilter(request, response);
+            return;
+        }
+        final String token = optionalToken.get();
         if(jwtService.isTokenValid(token) && !jwtService.isTokenExpired(token)){
             final Authentication auth = new ApiKeyAuthentication(token, AuthorityUtils.NO_AUTHORITIES);
             SecurityContextHolder.getContext().setAuthentication(auth);
@@ -41,7 +46,7 @@ public class APITokenFilter extends OncePerRequestFilter {
             throw new BadCredentialsException(String.format("The token %s is not valid or expired", token));
         }
 
-        doFilter(request, response, filterChain);
+        filterChain.doFilter(request, response);
     }
 
     /**
